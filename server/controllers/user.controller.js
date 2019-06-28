@@ -9,23 +9,29 @@ usercontroller.getUsers = async (req, res)=>{
 
 usercontroller.createUser = async (req, res)=>{
     // validamos email repetido
-    // const emailUser = await User.findOne({email: email});
-    // if(emailUser){
-    //     req.flash('error_msg', 'The Emain is already in use');
-    //     // rediccionar al signup....
-    //     //res.redirect('/');
-    // }
-
-    const user = new User(req.body);
-    //user.password = await user.encryptPassword(password);
-    await user.save();
-    console.log(user) // en la propiedad body tomamos los datos que nos esta enviando el cliente
+    const emailUser = await User.findOne({email: req.body.email});
+    if(emailUser){
+        console.log("Ya existe un usurio con el email") 
+        //res.flash('error_msg', 'The Emain is already in use');
+         // rediccionar al signup....
+         //res.redirect('/');
+    }
+    else
+    {
+        const user = new User(req.body);
+        // encriptamos la contraseña
+        //user.password = await user.encryptPassword(password);
+        await user.save();
+        console.log(user) // en la propiedad body tomamos los datos que nos esta enviando el cliente
    
-    res.json({
-        status: 'User Saved'
-    });
+        res.json({
+            status: 'User Saved'
+        });
 
-    // redireccionar al login....
+        // redireccionar al login....
+    }
+
+    
 }
 
 usercontroller.getUser = async (req, res)=>{
