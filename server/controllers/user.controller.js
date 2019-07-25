@@ -40,13 +40,14 @@ usercontroller.createUser = async (req, res)=>{
     }
     
     //Usamos una expresion regular para validar que el campo del nombre no permita caracteres especiales
-    const valCarEsp = new RegExp('^[A-Z]+$', 'i')
+    /*const valCarEsp = new RegExp('^[A-Z]+$', 'i')
     if(!valCarEsp.test(name))
     {
         console.log("El nombre de usuario debe no permite caracteres especiales");
         errors.push({text: "El nombre de usuario debe no permite caracteres especiales"});
     }
-    
+    */
+
     if(errors.length = 0)
     {
         const user = new User(req.body);
@@ -70,8 +71,9 @@ usercontroller.createUser = async (req, res)=>{
     
 }
 
-usercontroller.getUser = async (req, res)=>{
-    const user = await User.findById(req.params.id);
+usercontroller.loginUser = async (req, res)=>{
+    const user = await User.find({name: req.params.name});
+    //const user = await User.findById(req.params.id);
     if(user){
         res.json(user);
     }
